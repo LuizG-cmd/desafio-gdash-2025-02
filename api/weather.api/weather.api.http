@@ -1,0 +1,66 @@
+
+
+
+
+
+GET http://api.openweathermap.org/data/2.5/forecast?q=osasco&units=metric&appid=968f89edcb450a633b853a5dda6760b2
+
+###
+
+POST http://localhost:3000/api/users/user HTTP/1.1
+content-type: application/json
+
+{
+    "email": "gatosalem@admin.com.br",
+    "password": "123456"
+}
+
+###
+
+GET http://localhost:3000/api/users/jsonpai@admin.com.br
+
+###
+
+GET http://localhost:3000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhdG9zYWxlbUBhZG1pbi5jb20uYnIiLCJpYXQiOjE3NjU5ODY0ODQsImV4cCI6MTc2NTk5MDA4NH0.TxMJ6c6BvGqDCXgcI0kiQPJce4BEe9aAg8GxFGS3530
+
+
+###
+
+POST http://localhost:3000/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "gatosalem@admin.com.br",
+    "password": "123456"
+}
+
+
+###
+
+GET http://localhost:3000/api/insights/gemini
+
+
+###
+
+GET http://localhost:3000/api/users/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhdG9zYWxlbUBhZG1pbi5jb20uYnIiLCJpYXQiOjE3NjU5ODY0ODQsImV4cCI6MTc2NTk5MDA4NH0.TxMJ6c6BvGqDCXgcI0kiQPJce4BEe9aAg8GxFGS3530
+
+###
+
+PATCH http://localhost:3000/api/users/6942d0064e331f9e72b2f6e4 HTTP/1.1
+content-type: application/json
+
+{
+    "email": "salve@admin.com.br",
+    "password": "123456789"
+}
+
+
+###
+
+DELETE http://localhost:3000/api/users/6942d0064e331f9e72b2f6e4 HTTP/1.1
+
+
+
+
