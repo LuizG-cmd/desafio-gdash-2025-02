@@ -14,34 +14,34 @@ import (
 
 // WeatherData representa os dados meteorológicos
 type WeatherData struct {
-	// Identificação temporal
-	CollectedAt       string `json:"collectedAt"`       // ISO 8601 timestamp de quando foi coletado
-	ForecastTime      string `json:"forecastTime"`      // Data/hora da previsão (YYYY-MM-DD HH:MM:SS)
-	ForecastTimestamp int64  `json:"forecastTimestamp"` // Unix timestamp da previsão
+	
+	CollectedAt       string `json:"collectedAt"`       
+	ForecastTime      string `json:"forecastTime"`      
+	ForecastTimestamp int64  `json:"forecastTimestamp"` 
 	
 	// Localização
-	City    string `json:"city"`    // Nome da cidade
-	Country string `json:"country"` // Código do país
+	City    string `json:"city"`    
+	Country string `json:"country"` 
 	
 	// Dados meteorológicos principais
-	Temperature float64 `json:"temperature"` // Temperatura em °C
-	FeelsLike   float64 `json:"feelsLike"`   // Sensação térmica em °C
-	TempMin     float64 `json:"tempMin"`     // Temperatura mínima em °C
-	TempMax     float64 `json:"tempMax"`     // Temperatura máxima em °C
-	Humidity    int     `json:"humidity"`    // Umidade relativa do ar em %
+	Temperature float64 `json:"temperature"` 
+	FeelsLike   float64 `json:"feelsLike"`   
+	TempMin     float64 `json:"tempMin"`     
+	TempMax     float64 `json:"tempMax"`     
+	Humidity    int     `json:"humidity"`    
 	
 	// Condições do tempo
-	WeatherCondition   string `json:"weatherCondition"`   // Condição principal (Rain, Clear, Clouds, etc.)
-	WeatherDescription string `json:"weatherDescription"` // Descrição detalhada
+	WeatherCondition   string `json:"weatherCondition"`   
+	WeatherDescription string `json:"weatherDescription"` 
 	
 	// Dados para detecção de chuva e alertas
-	RainProbability float64 `json:"rainProbability"` // Probabilidade de chuva em %
-	RainVolume      float64 `json:"rainVolume"`      // Volume de chuva em 3h (mm)
+	RainProbability float64 `json:"rainProbability"` 
+	RainVolume      float64 `json:"rainVolume"`      
 	
 	// Outros dados úteis
-	Cloudiness int     `json:"cloudiness"` // Cobertura de nuvens em %
-	WindSpeed  float64 `json:"windSpeed"`  // Velocidade do vento em m/s
-	Visibility int     `json:"visibility"` // Visibilidade em metros
+	Cloudiness int     `json:"cloudiness"` 
+	WindSpeed  float64 `json:"windSpeed"`  
+	Visibility int     `json:"visibility"` 
 }
 
 // Config armazena configurações do worker
@@ -75,11 +75,11 @@ func NewWorker(config Config) (*Worker, error) {
 	// Declara a fila
 	_, err = ch.QueueDeclare(
 		config.QueueName,
-		true,  // durable
-		false, // delete when unused
-		false, // exclusive
-		false, // no-wait
-		nil,   // arguments
+		true,  
+		false, 
+		false, 
+		false, 
+		nil,   
 	)
 	if err != nil {
 		ch.Close()
@@ -174,12 +174,12 @@ func (w *Worker) ProcessMessage(body []byte) error {
 func (w *Worker) Start() error {
 	msgs, err := w.ch.Consume(
 		w.config.QueueName,
-		"",    // consumer tag
-		false, // auto-ack (desabilitado para controle manual)
-		false, // exclusive
-		false, // no-local
-		false, // no-wait
-		nil,   // args
+		"",    
+		false, 
+		false, 
+		false, 
+		false, 
+		nil,   
 	)
 	if err != nil {
 		return fmt.Errorf("falha ao registrar consumidor: %w", err)
