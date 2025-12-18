@@ -1,0 +1,21 @@
+export type WeatherExportData = {
+  id: string;
+  collectedAt: string;
+  forecastTime: string;
+  forecastTimestamp: number;
+  city: string;
+  country: string;
+  temperature: number;
+  feelsLike: number;
+  tempMin: number;
+  tempMax: number;
+  humidity: number;
+  weatherCondition: string;
+  weatherDescription: string;
+  rainProbability: number;
+  rainVolume: number;
+  cloudiness: number;
+  windSpeed: number;
+  visibility: number;
+  createdAt: Date;
+};
