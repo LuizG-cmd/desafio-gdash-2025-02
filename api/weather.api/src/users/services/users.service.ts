@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -26,6 +30,9 @@ export class UsersService {
     this.saltOrRounds = Number(salt);
   }
   async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
+    const existinguser = await this.findOne(createUserDto.email);
+
+    if (existinguser) throw new ConflictException('User arleady active');
     const hashpassword = await bcrypt.hash(
       createUserDto.password,
       this.saltOrRounds,
@@ -34,6 +41,7 @@ export class UsersService {
       ...createUserDto,
       password: hashpassword,
     }).save();
+
     return {
       id: user._id,
       email: user.email,
@@ -46,6 +54,7 @@ export class UsersService {
 
   async findOne(email: string): Promise<User | null> {
     const user = await this.userModel.findOne({ email }).exec();
+    if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
@@ -59,7 +68,8 @@ export class UsersService {
       { new: true },
     );
 
-    if (!user) throw new NotFoundException();
+    if (!user)
+      throw new NotFoundException('User not found, please type other ID');
 
     return {
       id: user._id,

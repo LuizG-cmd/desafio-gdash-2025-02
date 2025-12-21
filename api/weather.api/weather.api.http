@@ -1,54 +1,45 @@
 
-
-
-
+### OpenWeather Status 
 
 GET http://api.openweathermap.org/data/2.5/forecast?q=osasco&units=metric&appid=968f89edcb450a633b853a5dda6760b2
 
-###
+
+
+
+
+
+### Create a new user
 
 POST http://localhost:3000/api/users/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "gatosalem@admin.com.br",
+    "email": "teste@admin.com.br",
     "password": "123456"
 }
 
-###
+### Find one user (not used)
 
-GET http://localhost:3000/api/users/jsonpai@admin.com.br
-
-###
-
-GET http://localhost:3000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhdG9zYWxlbUBhZG1pbi5jb20uYnIiLCJpYXQiOjE3NjU5ODY0ODQsImV4cCI6MTc2NTk5MDA4NH0.TxMJ6c6BvGqDCXgcI0kiQPJce4BEe9aAg8GxFGS3530
+GET http://localhost:3000/api/users/nyudji@admin.com.br
 
 
-###
 
-POST http://localhost:3000/api/users/login HTTP/1.1
-content-type: application/json
-
-{
-    "email": "gatosalem@admin.com.br",
-    "password": "123456"
-}
-
-
-###
-
-GET http://localhost:3000/api/insights/gemini
-
-
-###
+### Find one user (extract token data)
 
 GET http://localhost:3000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhdG9zYWxlbUBhZG1pbi5jb20uYnIiLCJpYXQiOjE3NjU5ODY0ODQsImV4cCI6MTc2NTk5MDA4NH0.TxMJ6c6BvGqDCXgcI0kiQPJce4BEe9aAg8GxFGS3530
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjYzMjg1ODEsImV4cCI6MTc2NjMzMjE4MX0.GCj2_8Oj650yzXsZYwRxibvFpo88Ml7o5VrB0maAGUI
 
-###
 
-PATCH http://localhost:3000/api/users/6942d0064e331f9e72b2f6e4 HTTP/1.1
+
+### Find all users
+
+GET http://localhost:3000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjYzMjg1ODEsImV4cCI6MTc2NjMzMjE4MX0.GCj2_8Oj650yzXsZYwRxibvFpo88Ml7o5VrB0maAGUI
+
+
+### Update one user
+
+PATCH http://localhost:3000/api/users/69447d994b6cc5f61b84f4d9 HTTP/1.1
 content-type: application/json
 
 {
@@ -57,13 +48,46 @@ content-type: application/json
 }
 
 
-###
+### Delete one user
 
-DELETE http://localhost:3000/api/users/6942d0064e331f9e72b2f6e4 HTTP/1.1
+DELETE http://localhost:3000/api/users/69447d994b6cc5f61b84f4d9 HTTP/1.1
 
-###
+
+
+
+
+### Generate access and refresh token
+
+POST http://localhost:3000/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "teste@admin.com.br",
+    "password": "123456"
+}
+
+
+
+
+### Request IA insights for weather logs
+
+GET http://localhost:3000/api/insights/deepseek
+
+
+
+### Export weather logs for csv
+
 GET http://localhost:3000/api/weather/csv
 
+
+### Export weather logs for xlsx
+
+GET http://localhost:3000/api/weather/csv
+
+
+###
+
+GET http://localhost:3000/api/weather/logs
 
 
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -16,24 +16,27 @@ export class InsightsService {
     const GeminiKey = configService.get<string>('GEMINI_API_KEY');
 
     if (!GeminiKey) {
-      throw new Error('Chave não localizada');
+      throw new Error('API KEY not found');
     }
 
     this.GenIa = new GoogleGenerativeAI(GeminiKey);
   }
 
   async generateText() {
-    const model = this.GenIa.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    try {
+      const model = this.GenIa.getGenerativeModel({
+        model: 'gemini-2.5-flash',
+      });
 
-    const promptdata = await this.weatherModel
-      .find()
-      .sort({ createdAt: -1 })
-      .limit(100)
-      .exec();
+      const promptdata = await this.weatherModel
+        .find()
+        .sort({ createdAt: -1 })
+        .limit(40)
+        .exec();
 
-    const formatdata = JSON.stringify(promptdata, null, 2);
+      const formatdata = JSON.stringify(promptdata, null, 2);
 
-    const result = await model.generateContent(`
+      const result = await model.generateContent(`
       Analise os seguintes dados meteorológicos e calcule:
       - Média de temperatura
       - Média de umidade
@@ -43,9 +46,15 @@ export class InsightsService {
       Dados:
       ${formatdata}
 
-      Por favor, forneça insights claros e objetivos.
+      Por favor, forneça insights como se fossem cards para que eu possa utilizar em meu frontend
     `);
 
-    return result.response.text();
+      return result.response.text();
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Failed to call Gemini Api',
+        error.message,
+      );
+    }
   }
 }

@@ -12,11 +12,6 @@ interface IUserResponse {
   email: string;
 }
 
-interface IUserRequestLogin {
-  sub: string;
-  email: string;
-}
-
 @Injectable()
 export class AuthService {
   constructor(
